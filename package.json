@@ -1,0 +1,17 @@
+{
+  "name": "ts-meet-the-family",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.0.11",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  }
+}

@@ -1,0 +1,5 @@
+GET_RELATIONSHIP Dritha Daughter
+GET_RELATIONSHIP Atya Son
+GET_RELATIONSHIP Satya Sister-In-Law
+ADD_CHILD Drithaa Sarithaa female
+GET_RELATIONSHIP Dritha Daughter
