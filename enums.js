@@ -11,8 +11,8 @@ const Relations = Object.freeze({
 });
 
 const Operations = Object.freeze({
-    getRelationship: 1,
-    addChild: 2
+    GET_RELATIONSHIP: 1,
+    ADD_CHILD: 2
 })
 
 module.exports = {Relations, Operations};
