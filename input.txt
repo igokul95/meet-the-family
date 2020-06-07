@@ -1,0 +1,5 @@
+GET_RELATIONSHIP Chit Daughter
+GET_RELATIONSHIP Dritha Daughter
+GET_RELATIONSHIP Dritha Paternal-Uncle
+ADD_CHILD Dritha Saritha female
+GET_RELATIONSHIP Dritha Daughter
