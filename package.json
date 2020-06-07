@@ -1,0 +1,12 @@
+{
+  "name": "meet-the-family",
+  "version": "1.0.0",
+  "description": "Solution to geektrust's backend problem \"meet the family\"",
+  "main": "geektrust.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node geektrust.js"
+  },
+  "author": "igokul95@gmail.com",
+  "license": "ISC"
+}
