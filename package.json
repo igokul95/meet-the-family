@@ -1,12 +1,17 @@
 {
-  "name": "meet-the-family",
+  "name": "ts-meet-the-family",
   "version": "1.0.0",
-  "description": "Solution to geektrust's backend problem \"meet the family\"",
-  "main": "geektrust.js",
+  "description": "",
+  "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node geektrust.js"
+    "start": "ts-node src/index.ts"
   },
-  "author": "igokul95@gmail.com",
-  "license": "ISC"
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.0.11",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  }
 }
