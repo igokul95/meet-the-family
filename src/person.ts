@@ -8,67 +8,71 @@ class Person {
     this.name = name;
     this.gender = gender;
   }
-  public siblings() {
-      let relations: Person[] | null = [];
+  public sons() {
+    return this.children.filter((child) => child.gender === Gender.male);
+  }
+  public daughters() {
+    return this.children.filter((child) => child.gender === Gender.female);
+  }
+  public brothers() {
     if (this.parents) {
-      relations =  this.parents.father.children.filter(
-        (person) => person.name !== this.name
-      );
+      return this.parents.father
+        .sons()
+        .filter((child) => child.name !== this.name);
     }
-    return relations.length > 0 ? relations : [];
+    return [];
+  }
+  public sisters() {
+    if (this.parents) {
+      return this.parents.father
+        .daughters()
+        .filter((child) => child.name !== this.name);
+    }
+    return [];
+  }
+  public siblings() {
+    return [...this.brothers(), ...this.sisters()];
   }
 
   private maternalUncles() {
-      let relations = []
-      if (this.parents) {
-      relations = this.parents.mother
-        .siblings()
-        ?.filter((sibling) => sibling.gender === Gender.male);
+    let relations = [];
+    if (this.parents) {
+      relations = this.parents.mother.brothers();
     }
     return relations.length > 0 ? relations : null;
   }
 
   private maternalAunts() {
-      let relations: Person[] | null = []
+    let relations: Person[] | null = [];
     if (this.parents) {
-      relations = this.parents.mother
-        .siblings()
-        ?.filter((sibling) => sibling.gender === Gender.female);
+      relations = this.parents.mother.sisters();
     }
     return relations.length > 0 ? relations : null;
   }
 
   private paternalUncles() {
-      let relations = []
+    let relations = [];
     if (this.parents) {
-      relations = this.parents.father
-        .siblings()
-        ?.filter((sibling) => sibling.gender === Gender.male);
+      relations = this.parents.father.brothers();
     }
     return relations.length > 0 ? relations : null;
   }
   private paternalAunts() {
-      let relations = [];
+    let relations = [];
     if (this.parents) {
-      relations = this.parents.father
-        .siblings()
-        ?.filter((sibling) => sibling.gender === Gender.female);
+      relations = this.parents.father.sisters();
     }
     return relations.length > 0 ? relations : null;
   }
   private brotherInLaws() {
     let relations = [];
     if (this.spouse) {
-      relations = [
-        ...this.spouse
-          .siblings()
-          ?.filter((sibling) => sibling.gender === Gender.male),
-      ];
+      relations = [...this.spouse.brothers()];
     }
     relations = [
-      ...relations, ...this.siblings()
-        .filter((sibling) => sibling.gender === Gender.female)
-        .filter(sibling => sibling.spouse)
+      ...relations,
+      ...this.sisters()
+        .filter((sibling) => sibling.spouse)
         .map((sibling) => sibling.spouse),
     ];
     return relations.length > 0 ? relations : null;
@@ -77,16 +81,12 @@ class Person {
   private sisterInLaws() {
     let relations = [];
     if (this.spouse) {
-      relations = [
-        ...this.spouse
-          .siblings()
-          ?.filter((sibling) => sibling.gender === Gender.female),
-      ];
+      relations = [...this.spouse.sisters()];
     }
     relations = [
-      ...relations, ...this.siblings()
-        ?.filter((sibling) => sibling.gender === Gender.male)
-        .filter(sibling => sibling.spouse)
+      ...relations,
+      ...this.brothers()
+        .filter((sibling) => sibling.spouse)
         .map((sibling) => sibling.spouse),
     ];
     return relations.length > 0 ? relations : null;
@@ -94,16 +94,12 @@ class Person {
   public getRelations(relation: Relations) {
     switch (relation) {
       case Relations.Son: {
-        const relations = this.children.filter(
-          (child) => child.gender === Gender.male
-        );
-        return relations.length > 0 ? relations : null;
+        const sons = this.sons();
+        return sons.length > 0 ? sons : null;
       }
       case Relations.Daughter: {
-        const relations = this.children.filter(
-          (child) => child.gender === Gender.female
-        );
-        return relations.length > 0 ? relations : null;
+        const daughters = this.daughters();
+        return daughters.length > 0 ? daughters : null;
       }
       case Relations.Siblings: {
         return this.siblings();
@@ -115,7 +111,6 @@ class Person {
         return this.maternalUncles();
       }
       case Relations.PaternalUncle: {
-          
         return this.paternalUncles();
       }
       case Relations.PaternalAunt: {
