@@ -1,5 +1,6 @@
 import Family from "./family";
 import { Operations, Relations, Gender } from "./types";
+import getRelation, { consoleRelations, consoleAddChildStatus } from "./helper";
 const fs = require("fs");
 
 const main = () => {
@@ -18,27 +19,19 @@ const main = () => {
       switch (operation) {
         case Operations.GET_RELATIONSHIP: {
           const name = elements[1];
-          const member = family.findMember(name);
-          if (member) {
-            const relation = Relations[elements[2].split("-").join("")];
-            const relatedMembers = member.getRelations(relation);
-            if (relatedMembers) {
-              console.log(relatedMembers.map((member) => member.name));
-            } else {
-              console.log("PERSON_NOT_FOUND");
-            }
-          }
+          const relation = Relations[elements[2].split("-").join("")];
+          const relatedPersons = getRelation(family, name, relation);
+          consoleRelations(relatedPersons);
           break;
         }
         case Operations.ADD_CHILD: {
           const motherName = elements[1];
           const childName = elements[2];
           const gender = Gender[elements[3]];
-          if (family.addChildToMother(motherName, childName, gender)) {
-            console.log("ADD_CHILD_SUCCESS");
-          } else {
-            console.log("ADD_CHILD_FAILED");
-          }
+          consoleAddChildStatus(
+            family.addChildToMother(motherName, childName, gender)
+          );
+          break;
         }
         default:
           console.log("Invalid Operation");
